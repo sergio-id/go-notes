@@ -1,0 +1,1117 @@
+{
+	"info": {
+		"_postman_id": "2e404f93-6b48-4c2f-9153-25dc499c557f",
+		"name": "Notes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12014416"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody=pm.response.json();",
+									"pm.environment.set('bearerToken', responseBody.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody=pm.response.json();",
+									"pm.environment.set('bearerToken', responseBody.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/signout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "category [list]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category [one]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/{{categoryID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"{{categoryID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category [create]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody=pm.response.json();",
+									"pm.environment.set('categoryID', responseBody.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{$randomWords}}\",\n    \"pinned\": false,\n    \"priority\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category [update]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{$randomWords}}\",\n    \"pinned\": true,\n    \"priority\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/{{categoryID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"{{categoryID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category [delete]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/{{categoryID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"{{categoryID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Note",
+			"item": [
+				{
+					"name": "note [list]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "session_id=20b6bd5d-e12e-4e95-ab96-878ad6d6cc57; Max-Age=86400; Path=/; HttpOnly; SameSite=Lax",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/note",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note [one]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/note/{{noteID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note",
+								"{{noteID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note [create]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody=pm.response.json();",
+									"pm.environment.set('noteID', responseBody.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{$randomWords}}\",\n    \"content\": \"{{$randomWords}}\",\n    \"pinned\": false,\n    \"priority\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/note",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note [update]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_id\": \"{{categoryID}}\",\n    \"title\": \"{{$randomWords}}\",\n    \"content\": \"{{$randomWords}}\",\n    \"pinned\": true,\n    \"priority\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/note/{{noteID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note",
+								"{{noteID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note [delete]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/note/{{noteID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note",
+								"{{noteID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody=pm.response.json();",
+									"pm.environment.set('email', responseBody.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user [update]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"{{$randomFirstName}}\",\n    \"last_name\": \"{{$randomLastName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user [delete]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string: \\\"token\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"token\");",
+									"});",
+									"",
+									"var responseBody = pm.response.json();",
+									"",
+									"pm.test(\"\\\"bearerToken\\\" env var has been successfully set\", function () {",
+									"    pm.environment.set('bearerToken', responseBody.token);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me [check schema]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"var schema = {",
+									"\t\"type\": \"object\",",
+									"\t\"properties\": {",
+									"\t\t\"id\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"email\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"password\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"firstName\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"lastName\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"updatedAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t},",
+									"\t\t\"createdAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t}",
+									"\t}",
+									"};",
+									"",
+									"var responseBody=pm.response.json();",
+									"",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"var schema = {",
+									"\t\"type\": \"object\",",
+									"\t\"properties\": {",
+									"\t\t\"id\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"userId\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"title\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"pinned\": {",
+									"\t\t\t\"type\": \"boolean\"",
+									"\t\t},",
+									"\t\t\"priority\": {",
+									"\t\t\t\"type\": \"integer\",",
+									"\t\t\t\"format\": \"int32\"",
+									"\t\t},",
+									"\t\t\"updatedAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t},",
+									"\t\t\"createdAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t}",
+									"\t}",
+									"};",
+									"",
+									"var responseBody=pm.response.json();",
+									"",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Body matches string: \\\"id\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"id\");",
+									"});",
+									"",
+									"pm.test(\"\\\"сategoryID\\\" env var has been successfully set\", function () {",
+									"    pm.environment.set('categoryID', responseBody.id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{$randomWords}}\",\n    \"pinned\": false,\n    \"priority\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category [check schema]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"var schema = {",
+									"\t\"type\": \"object\",",
+									"\t\"properties\": {",
+									"\t\t\"id\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"userId\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"title\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"pinned\": {",
+									"\t\t\t\"type\": \"boolean\"",
+									"\t\t},",
+									"\t\t\"priority\": {",
+									"\t\t\t\"type\": \"integer\",",
+									"\t\t\t\"format\": \"int32\"",
+									"\t\t},",
+									"\t\t\"updatedAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t},",
+									"\t\t\"createdAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t}",
+									"\t}",
+									"};",
+									"",
+									"var responseBody=pm.response.json();",
+									"",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"ID OK\", function () {",
+									"    pm.expect(responseBody.id).to.eql(pm.environment.get(\"categoryID\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/{{categoryID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"{{categoryID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"var schema = {",
+									"\t\"type\": \"object\",",
+									"\t\"properties\": {",
+									"\t\t\"id\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"userId\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"categoryId\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"title\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"content\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t},",
+									"\t\t\"pinned\": {",
+									"\t\t\t\"type\": \"boolean\"",
+									"\t\t},",
+									"\t\t\"priority\": {",
+									"\t\t\t\"type\": \"integer\",",
+									"\t\t\t\"format\": \"int32\"",
+									"\t\t},",
+									"\t\t\"updatedAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t},",
+									"\t\t\"createdAt\": {",
+									"\t\t\t\"type\": \"string\",",
+									"\t\t\t\"format\": \"date-time\"",
+									"\t\t}",
+									"\t}",
+									"};",
+									"",
+									"var responseBody=pm.response.json();",
+									"",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Body matches string: \\\"id\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"id\");",
+									"});",
+									"",
+									"pm.test(\"\\\"noteID\\\" env var has been successfully set\", function () {",
+									"    pm.environment.set('noteID', responseBody.id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": \"{{categoryID}}\",\n    \"title\": \"{{$randomWords}}\",\n    \"content\": \"{{$randomWords}}\",\n    \"pinned\": false,\n    \"priority\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/note",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/signout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me [check error]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"401 Unauthorized\", function () {",
+									"    pm.response.to.have.status(401);",
+									"    pm.response.to.have.status(\"Unauthorized\");",
+									"});",
+									"",
+									"var schema = {",
+									"\t\"type\": \"object\",",
+									"\t\"properties\": {",
+									"\t\t\"code\": {",
+									"\t\t\t\"type\": \"integer\"",
+									"\t\t},",
+									"\t\t\"message\": {",
+									"\t\t\t\"type\": \"string\"",
+									"\t\t}",
+									"\t}",
+									"};",
+									"",
+									"var responseBody=pm.response.json();",
+									"",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Correct code: 16\", function () {",
+									"    pm.expect(responseBody.code).to.eql(16);",
+									"});",
+									"",
+									"pm.test(\"Correct message: \\\"Invalid token\\\"\", function () {",
+									"    pm.expect(responseBody.message).to.eql(\"Invalid token\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
