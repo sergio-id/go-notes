@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+DROP TABLE "user"."user";
+DROP SCHEMA "user";
+
+COMMIT;

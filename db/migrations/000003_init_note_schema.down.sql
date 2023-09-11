@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+DROP TABLE note.note;
+DROP SCHEMA note;
+
+COMMIT;

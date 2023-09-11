@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+DROP TABLE category.category;
+DROP SCHEMA category;
+
+COMMIT;
