@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package grpc_notes_microservices_test.proto.categoryapi;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/sergio-id/go-notes/proto/gen";
+
+service CategoryService {
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/category"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Category list"
+      description: "Get category list."
+      tags: "Category"
+    };
+  }
+
+  rpc GetCategory(GetCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      get: "/v1/api/category/{id}"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Category by ID"
+      description: "Get category."
+      tags: "Category"
+    };
+  }
+
+  rpc CreateCategory(CreateCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      post: "/v1/api/category"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create category"
+      description: "Create category."
+      tags: "Category"
+    };
+  }
+
+  rpc UpdateCategory(UpdateCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      put: "/v1/api/category/{id}"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update category"
+      description: "Update category."
+      tags: "Category"
+    };
+  }
+
+  rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/api/category/{id}"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete category"
+      description: "Delete category."
+      tags: "Category"
+    };
+  }
+}
+
+message Category {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  bool pinned = 4;
+  int32 priority = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ListCategoriesRequest {
+  optional int32 limit = 1;
+  optional int32 offset = 2;
+}
+message ListCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message GetCategoryRequest {
+  string id = 1;
+}
+
+message CreateCategoryRequest {
+  string title = 1;
+  bool pinned = 2;
+  int32 priority = 3;
+}
+
+message UpdateCategoryRequest {
+  string id = 1;
+  string title = 2;
+  bool pinned = 3;
+  int32 priority = 4;
+}
+
+message DeleteCategoryRequest {
+  string id = 1;
+}

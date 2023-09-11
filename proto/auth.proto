@@ -1,0 +1,72 @@
+syntax="proto3";
+
+package go.grpc.notes.microservices.test.proto.authapi;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/sergio-id/go-notes/proto/gen";
+
+service AuthService {
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {
+    option (google.api.http) = {
+      post: "/v1/api/signup"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Register"
+      description: "Register on the server."
+      tags: "Auth"
+    };
+  }
+  rpc SignIn(SignInRequest) returns (SignInResponse) {
+    option (google.api.http) = {
+      post: "/v1/api/signin"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Login"
+      description: "Login on the server."
+      tags: "Auth"
+    };
+  }
+  rpc SignOut(SignOutRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/api/signout"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Logout"
+      description: "Logout from the server."
+      tags: "Auth"
+    };
+  }
+  rpc GetSession(GetSessionRequest) returns (Session) {}
+}
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+message SignInResponse {
+  string token = 1;
+}
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+}
+message SignUpResponse {
+  string token = 1;
+}
+
+message SignOutRequest {}
+
+message GetSessionRequest {
+  string token = 1;
+}
+message Session {
+  string token = 1;
+  string user_id = 2;
+}

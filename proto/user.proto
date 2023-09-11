@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package grpc_notes_microservices_test.proto.userapi;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/sergio-id/go-notes/proto/gen";
+
+service UserService {
+  rpc GetMe(GetMeRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/api/me"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "User by ID"
+      description: "Get user."
+      tags: "User"
+    };
+  }
+
+  rpc CreateUser(CreateUserRequest) returns (User) {}
+
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      put: "/v1/api/user"
+      body: "*"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update user"
+      description: "Update user."
+      tags: "User"
+    };
+  }
+
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/api/user"
+    };
+    option (.grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete user"
+      description: "Delete user."
+      tags: "User"
+    };
+  }
+
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (User) {}
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  string first_name = 4;
+  string last_name = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message GetMeRequest {}
+
+message CreateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message UpdateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+}
+
+message DeleteUserRequest {}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
