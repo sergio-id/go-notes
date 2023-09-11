@@ -1,0 +1,145 @@
+version: "3.8"
+
+services:
+  proxy:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/proxy/Dockerfile
+    image: simple025/go-notes-proxy
+    environment:
+      APP_NAME: 'proxy-service'
+      AUTH_CLIENT_URL: 'auth:5001'
+      NOTE_CLIENT_URL: 'note:5002'
+      CATEGORY_CLIENT_URL: 'category:5003'
+      USER_CLIENT_URL: 'user:5004'
+    ports:
+      - "5555:5555"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - notes-network
+
+  auth:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/auth/Dockerfile
+    image: simple025/go-notes-auth
+    environment:
+      APP_NAME: 'go-notes-auth'
+      USER_CLIENT_URL: user:5004
+      REDIS_ADDR: redis:6379
+    ports:
+      - "5001:5001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - notes-network
+
+  category:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/category/Dockerfile
+    image: simple025/go-notes-category
+    environment:
+      APP_NAME: 'category-service'
+      IN_DOCKER: "true"
+      PG_URL: postgres://postgres:postgres@postgres:5432/postgres
+      PG_DSN_URL: host=postgres user=postgres password=postgres dbname=postgres sslmode=disable
+      AUTH_CLIENT_URL: 'auth:5001'
+    ports:
+      - "5003:5003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - notes-network
+
+  note:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/note/Dockerfile
+    image: simple025/go-notes-note
+    environment:
+      APP_NAME: 'note-service'
+      IN_DOCKER: "true"
+      PG_URL: postgres://postgres:postgres@postgres:5432/postgres
+      PG_DSN_URL: host=postgres user=postgres password=postgres dbname=postgres sslmode=disable
+      AUTH_CLIENT_URL: 'auth:5001'
+    ports:
+      - "5002:5002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - notes-network
+
+  user:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/user/Dockerfile
+    image: simple025/go-notes-user
+    environment:
+      APP_NAME: 'user-service'
+      IN_DOCKER: "true"
+      INIT_MIGRATIONS: "true"
+      PG_URL: postgres://postgres:postgres@postgres:5432/postgres
+      PG_DSN_URL: host=postgres user=postgres password=postgres dbname=postgres sslmode=disable
+      AUTH_CLIENT_URL: 'auth:5001'
+    ports:
+      - "5004:5004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - notes-network
+  
+  postgres:
+    image: postgres:14.6-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./db/fixtures/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    networks:
+      - notes-network
+
+  redis:
+    image: redis:7.0.10-alpine
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redisdata:/data
+    restart: always
+    networks:
+      - notes-network
+
+networks:
+  notes-network:
+    driver: bridge
