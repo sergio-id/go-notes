@@ -1,0 +1,21 @@
+dependencies:
+- name: auth
+  repository: file://../auth
+  version: 0.1.0
+- name: category
+  repository: file://../category
+  version: 0.1.0
+- name: note
+  repository: file://../note
+  version: 0.1.0
+- name: user
+  repository: file://../user
+  version: 0.1.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.10.0
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 18.0.0
+digest: sha256:bb4b7bffad3438d7a2a0a3b922d93c0bef88c6a5a96eab1110139cc7e1ef2fb0
+generated: "2023-09-11T19:48:02.99544+08:00"

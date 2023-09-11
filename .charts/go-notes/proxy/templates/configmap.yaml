@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-notes-config-map
+data:
+  AUTH_CLIENT_URL: {{ .Values.client.auth_client_url | quote }}
+  NOTE_CLIENT_URL: {{ .Values.client.note_client_url | quote }}
+  CATEGORY_CLIENT_URL: {{ .Values.client.category_client_url | quote }}
+  USER_CLIENT_URL: {{ .Values.client.user_client_url | quote }}
+  PG_DSN_URL: {{ .Values.pgsql.dsn_url | quote }}
+  REDIS_ADDR: {{ .Values.redis.addr | quote }}
