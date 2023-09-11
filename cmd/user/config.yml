@@ -1,0 +1,19 @@
+app:
+  name: 'user-service'
+  version: '1.0.0'
+
+http:
+  host: '0.0.0.0'
+  port: 5004
+
+auth_client:
+  url: 0.0.0.0:5001
+
+postgres:
+  pool_max: 2
+  dsn_url: host=127.0.0.1 user=postgres password=postgres dbname=postgres sslmode=disable
+
+logger:
+  log_level: 'debug'
+  console: true
+  rollbar_env: 'user-service'

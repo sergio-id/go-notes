@@ -1,0 +1,18 @@
+app:
+  name: 'reverse-proxy'
+  version: '1.0.0'
+
+http:
+  host: '0.0.0.0'
+  port: 5555
+
+client:
+  auth_client_url: '0.0.0.0:5001'
+  note_client_url: '0.0.0.0:5002'
+  category_client_url: '0.0.0.0:5003'
+  user_client_url: '0.0.0.0:5004'
+
+logger:
+  log_level: 'debug'
+  console: true
+  rollbar_env: 'reverse-proxy'

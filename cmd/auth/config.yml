@@ -1,0 +1,35 @@
+app:
+  name: 'go-notes-auth'
+  version: '1.0.0'
+
+http:
+  host: '0.0.0.0'
+  port: 5001
+
+session_duration: 86400
+
+user_client:
+  url: 0.0.0.0:5004
+
+redis:
+  addr: "localhost:6379"
+  password: ""
+  db: 0
+  poolSize: 200
+  minIdleConns: 200
+  poolTimeout: 5
+
+security:
+  saltLength: 16
+  argonTime: 1
+  argonMemory: 65536
+  argonThreads: 4
+  argonKeyLen: 32
+
+logger:
+  log_level: 'debug'
+  console: true
+  rollbar_env: 'go-notes-auth'
+
+image:
+  tag: latest
